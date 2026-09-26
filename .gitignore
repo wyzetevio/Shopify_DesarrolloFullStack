@@ -1,0 +1,48 @@
+# =========================
+# JAVA / SPRING BOOT
+# =========================
+target/
+*.class
+*.jar
+*.war
+
+# Maven
+.mvn/timing.properties
+
+# =========================
+# NODE / REACT
+# =========================
+node_modules/
+dist/
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# =========================
+# IDE
+# =========================
+.idea/
+*.iml
+
+.vscode/
+.settings/
+.classpath
+.project
+
+# =========================
+# SISTEMA OPERATIVO
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# LOGS
+# =========================
+*.log
+
+# =========================
+# VARIABLES SENSIBLES
+# =========================
+application-local.properties
+application-secret.properties
