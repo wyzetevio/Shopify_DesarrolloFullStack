@@ -1,5 +1,6 @@
 package com.shopcloud.tenant;
 
+import com.shopcloud.exception.RecursoNoEncontradoException;
 import com.shopcloud.tienda.entity.Tienda;
 import com.shopcloud.tienda.repository.TiendaRepository;
 
@@ -32,7 +33,7 @@ public class TenantService {
                         )
                 )
                 .orElseThrow(() ->
-                        new IllegalStateException(
+                        new RecursoNoEncontradoException(
                                 "La tienda activa no existe"
                         )
                 );
