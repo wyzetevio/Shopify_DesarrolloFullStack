@@ -19,4 +19,11 @@ public interface TiendaRepository
             Long tiendaId,
             Long propietarioId
     );
+
+    boolean existsByIdAndPropietarioIdAndActivoTrue(
+            Long tiendaId,
+            Long propietarioId
+    );
+
+    boolean existsByIdAndActivoTrue(Long tiendaId);
 }
