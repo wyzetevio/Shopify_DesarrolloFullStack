@@ -1,5 +1,7 @@
 package com.shopcloud.usuario.service;
 
+import com.shopcloud.exception.RecursoNoEncontradoException;
+import com.shopcloud.exception.ReglaNegocioException;
 import com.shopcloud.usuario.dto.ActualizarUsuarioDTO;
 import com.shopcloud.usuario.dto.UsuarioDTO;
 import com.shopcloud.usuario.entity.Rol;
@@ -42,8 +44,8 @@ public class UsuarioService {
                 && usuarioRepository
                     .existsByCorreoElectronico(nuevoCorreo)) {
 
-            throw new IllegalArgumentException(
-                    "El correo electrónico ya está registrado"
+            throw new ReglaNegocioException(
+        "El correo electrónico ya está registrado"
             );
         }
 
@@ -66,9 +68,8 @@ public class UsuarioService {
         return usuarioRepository
                 .findById(usuarioId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Usuario no encontrado"
-                        )
+                        new RecursoNoEncontradoException(
+                          "Usuario no encontrado")
                 );
     }
 

@@ -1,5 +1,7 @@
 package com.shopcloud.tienda.service;
 
+import com.shopcloud.exception.RecursoNoEncontradoException;
+import com.shopcloud.exception.ReglaNegocioException;
 import com.shopcloud.tienda.dto.ActualizarTiendaDTO;
 import com.shopcloud.tienda.dto.CrearTiendaDTO;
 import com.shopcloud.tienda.dto.TiendaRespuestaDTO;
@@ -38,7 +40,7 @@ public class TiendaService {
         Usuario usuario = usuarioRepository
                 .findById(usuarioId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new RecursoNoEncontradoException(
                                 "Usuario no encontrado"
                         )
                 );
@@ -60,7 +62,7 @@ public class TiendaService {
         }
 
         if (slugBase.isBlank()) {
-            throw new IllegalArgumentException(
+            throw new ReglaNegocioException(
                     "No se pudo generar un slug válido"
             );
         }
@@ -189,7 +191,7 @@ public class TiendaService {
                         usuarioId
                 )
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new RecursoNoEncontradoException(
                                 "Tienda no encontrada o no pertenece al usuario"
                         )
                 );
@@ -219,7 +221,7 @@ public class TiendaService {
                                 "PROPIETARIO_TIENDA"
                         )
                         .orElseThrow(() ->
-                                new IllegalStateException(
+                                new RecursoNoEncontradoException(
                                         "El rol PROPIETARIO_TIENDA no existe"
                                 )
                         );
