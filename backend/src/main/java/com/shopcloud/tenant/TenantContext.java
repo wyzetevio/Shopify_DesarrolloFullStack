@@ -9,6 +9,13 @@ public final class TenantContext {
     }
 
     public static void setTenantId(Long tiendaId) {
+
+        if (tiendaId == null) {
+            throw new IllegalArgumentException(
+                    "El ID de la tienda no puede ser nulo"
+            );
+        }
+
         CURRENT_TENANT.set(tiendaId);
     }
 
@@ -27,6 +34,10 @@ public final class TenantContext {
 
     public static Long getTenantIdOrNull() {
         return CURRENT_TENANT.get();
+    }
+
+    public static boolean hasTenant() {
+        return CURRENT_TENANT.get() != null;
     }
 
     public static void clear() {
