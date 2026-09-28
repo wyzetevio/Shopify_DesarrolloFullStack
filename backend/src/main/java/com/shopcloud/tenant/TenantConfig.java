@@ -24,6 +24,7 @@ public class TenantConfig implements WebMvcConfigurer {
                         "/api/inventario/**",
                         "/api/descuentos/**",
                         "/api/clientes/**",
+                        "/api/mi-cuenta/**",
                         "/api/pedidos/**",
                         "/api/analitica/**"
                 );

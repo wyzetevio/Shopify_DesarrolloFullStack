@@ -81,7 +81,22 @@ public class TenantInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // 4. Verificar si es SUPER_ADMINISTRADOR
+        // 4. Las rutas del comprador solo necesitan una tienda activa.
+        // La propiedad de sus recursos se valida después con el usuario del JWT.
+        if (request.getRequestURI().startsWith("/api/mi-cuenta/")) {
+            if (!tiendaRepository.existsByIdAndActivoTrue(tiendaId)) {
+                response.sendError(
+                        HttpStatus.NOT_FOUND.value(),
+                        "La tienda activa no existe"
+                );
+                return false;
+            }
+
+            TenantContext.setTenantId(tiendaId);
+            return true;
+        }
+
+        // 5. Verificar si es SUPER_ADMINISTRADOR
         boolean esSuperAdministrador =
                 principal.getAuthorities()
                         .stream()
@@ -94,7 +109,7 @@ public class TenantInterceptor implements HandlerInterceptor {
 
         boolean tieneAcceso;
 
-        // 5. Validar acceso a la tienda
+        // 6. Validar acceso administrativo a la tienda
         if (esSuperAdministrador) {
 
             tieneAcceso =
@@ -123,7 +138,7 @@ public class TenantInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        // 6. Guardar tenant validado
+        // 7. Guardar tenant validado
         TenantContext.setTenantId(tiendaId);
 
         return true;
