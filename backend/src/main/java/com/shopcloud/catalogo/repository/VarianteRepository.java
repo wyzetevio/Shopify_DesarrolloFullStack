@@ -18,6 +18,11 @@ public interface VarianteRepository
             Long productoId
     );
 
+    Optional<Variante> findByIdAndProductoIdAndActivoTrue(
+            Long id,
+            Long productoId
+    );
+
     boolean existsByProductoIdAndSkuIgnoreCase(
             Long productoId,
             String sku

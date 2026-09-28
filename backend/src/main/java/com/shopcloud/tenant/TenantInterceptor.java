@@ -83,7 +83,15 @@ public class TenantInterceptor implements HandlerInterceptor {
 
         // 4. Las rutas del comprador solo necesitan una tienda activa.
         // La propiedad de sus recursos se valida después con el usuario del JWT.
-        if (request.getRequestURI().startsWith("/api/mi-cuenta/")) {
+        if (request.getRequestURI().startsWith("/api/mi-cuenta/")
+                || request.getRequestURI().equals("/api/carrito")
+                || request.getRequestURI().startsWith("/api/carrito/")
+                || request.getRequestURI().equals("/api/checkout")
+                || request.getRequestURI().startsWith("/api/checkout/")
+                || request.getRequestURI().equals("/api/pedidos")
+                || request.getRequestURI().startsWith("/api/pedidos/")
+                || request.getRequestURI().equals("/api/pagos")
+                || request.getRequestURI().startsWith("/api/pagos/")) {
             if (!tiendaRepository.existsByIdAndActivoTrue(tiendaId)) {
                 response.sendError(
                         HttpStatus.NOT_FOUND.value(),

@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +41,14 @@ public class ClienteService {
         return clienteRepository
                 .findByUsuarioIdAndTiendaId(usuarioId, tiendaId)
                 .orElseGet(() -> crearClienteActual(usuarioId));
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Cliente> obtenerClienteActualSiExiste() {
+        return clienteRepository.findByUsuarioIdAndTiendaId(
+                obtenerUsuarioIdAutenticado(),
+                tenantService.obtenerTenantId()
+        );
     }
 
     @Transactional(readOnly = true)
