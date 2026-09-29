@@ -18,6 +18,11 @@ public interface ProductoRepository
             Long tiendaId
     );
 
+    Optional<Producto> findByIdAndTiendaIdAndActivoTrue(
+            Long productoId,
+            Long tiendaId
+    );
+
     boolean existsByTiendaIdAndSkuIgnoreCase(
             Long tiendaId,
             String sku

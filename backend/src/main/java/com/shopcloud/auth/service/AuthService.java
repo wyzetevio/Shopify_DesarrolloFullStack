@@ -30,7 +30,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class  AuthService {
 
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
