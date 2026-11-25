@@ -6,11 +6,16 @@ services:
     dockerfilePath: ./Dockerfile
     plan: free
     envVars:
-      - key: DB_URL
+      # Copiar de .env.local (neon deploy / neon env pull)
+      - key: DATABASE_URL_UNPOOLED
         sync: false
-      - key: DB_USERNAME
+      - key: AWS_ACCESS_KEY_ID
         sync: false
-      - key: DB_PASSWORD
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_ENDPOINT_URL_S3
+        sync: false
+      - key: AWS_REGION
         sync: false
       - key: JWT_SECRET
         generateValue: true

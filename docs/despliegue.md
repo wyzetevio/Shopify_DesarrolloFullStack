@@ -38,9 +38,8 @@
 
    | Variable | Valor |
    |---|---|
-   | `DB_URL` | `jdbc:postgresql://ep-xxxx.us-east-2.aws.neon.tech/neondb?sslmode=require` (la de Neon, pero empezando por `jdbc:postgresql://` y **sin** usuario ni clave) |
-   | `DB_USERNAME` | usuario de Neon |
-   | `DB_PASSWORD` | clave de Neon |
+   | `DATABASE_URL_UNPOOLED` | cópiala de `.env.local` tal cual (`postgresql://…`). El backend la traduce a JDBC solo |
+   | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_ENDPOINT_URL_S3`, `AWS_REGION` | de `.env.local`: Neon Object Storage (bucket `uploads`) |
    | `JWT_SECRET` | la genera Render. Si la pones tú: Base64 de al menos 32 bytes (`openssl rand -base64 48`) |
    | `CORS_ALLOWED_ORIGINS` | de momento `http://localhost:5173`; en el paso 4 pones la URL de Vercel |
 
