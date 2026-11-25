@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { API_URL, apiPublica } from './cliente'
+import { apiPublica, crearInstancia } from './cliente'
 import { normalizarError } from './errores'
 import { sesionCliente } from './sesion'
 
@@ -17,7 +16,7 @@ export function configurarAlExpirarSesionCliente(slug, funcion) {
 /** Una instancia de Axios por tienda, que envía el token del cliente de esa tienda. */
 function api(slug) {
   if (!instancias.has(slug)) {
-    const instancia = axios.create({ baseURL: `${API_URL}/api` })
+    const instancia = crearInstancia()
     instancia.interceptors.request.use((config) => {
       const sesion = sesionCliente.obtener(slug)
       if (sesion?.token) config.headers.Authorization = `Bearer ${sesion.token}`

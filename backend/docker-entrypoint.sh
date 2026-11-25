@@ -24,4 +24,5 @@ if [ -n "$DB_HOST" ]; then
   unset PGPASSWORD
 fi
 
-exec java -XX:MaxRAMPercentage=75 -jar /app/app.jar --server.port="${PORT:-8080}"
+# JAVA_OPTS viene del Dockerfile (límites de memoria para el plan gratuito de Render)
+exec java $JAVA_OPTS -jar /app/app.jar --server.port="${PORT:-8080}"

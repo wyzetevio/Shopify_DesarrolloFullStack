@@ -11,7 +11,8 @@ RUN ./mvnw -q -B package -DskipTests
 FROM eclipse-temurin:22-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-# Limita la memoria para el plan gratuito de Render (512 MB)
-ENV JAVA_OPTS="-XX:MaxRAMPercentage=75 -XX:+UseSerialGC"
+# Memoria para el plan gratuito de Render (512 MB en total): heap fijo y tope al resto
+# (metaspace, código JIT, pilas de hilos). Con un porcentaje del total no queda sitio para lo demás.
+ENV JAVA_OPTS="-Xmx256m -Xss512k -XX:MaxMetaspaceSize=160m -XX:ReservedCodeCacheSize=48m -XX:MaxDirectMemorySize=32m -XX:+UseSerialGC -XX:TieredStopAtLevel=1"
 EXPOSE 8080
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

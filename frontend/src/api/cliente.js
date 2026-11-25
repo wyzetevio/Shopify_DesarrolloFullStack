@@ -1,11 +1,32 @@
 import axios from 'axios'
-import { normalizarError } from './errores'
+import { ErrorApi, normalizarError } from './errores'
 import { sesionPropietario, tiendaActual } from './sesion'
 
 export const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
 
-function crearInstancia() {
-  return axios.create({ baseURL: `${API_URL}/api` })
+if (!/^https?:\/\//.test(API_URL)) {
+  console.error(`VITE_API_URL debe ser una URL completa (https://...). Valor actual: "${API_URL}"`)
+}
+
+/**
+ * Si la URL de la API está mal, el hosting del frontend responde con su index.html.
+ * Se trata como error para que la página muestre un mensaje en lugar de romperse.
+ */
+function exigirJson(respuesta) {
+  const tipo = String(respuesta.headers?.['content-type'] ?? '')
+  if (tipo.includes('text/html')) {
+    return Promise.reject(new ErrorApi({
+      status: 0,
+      mensaje: 'No se pudo conectar con el servidor. Revisa la configuración de la API.',
+    }))
+  }
+  return respuesta
+}
+
+export function crearInstancia() {
+  const instancia = axios.create({ baseURL: `${API_URL}/api` })
+  instancia.interceptors.response.use(exigirJson)
+  return instancia
 }
 
 /** Rutas públicas, sin sesión: planes, catálogo de una tienda, login y registro. */
