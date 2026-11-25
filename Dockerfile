@@ -15,5 +15,8 @@ COPY --from=build /app/target/*.jar app.jar
 COPY database/*.sql database/
 COPY backend/docker-entrypoint.sh .
 RUN sed -i 's/\r$//' docker-entrypoint.sh && chmod +x docker-entrypoint.sh
+# Memoria para el plan gratuito de Render (512 MB en total): heap fijo y tope al resto
+# (metaspace, código JIT, pilas de hilos). Con un porcentaje del total no queda sitio para lo demás.
+ENV JAVA_OPTS="-Xmx256m -Xss512k -XX:MaxMetaspaceSize=160m -XX:ReservedCodeCacheSize=48m -XX:MaxDirectMemorySize=32m -XX:+UseSerialGC -XX:TieredStopAtLevel=1"
 EXPOSE 8080
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
